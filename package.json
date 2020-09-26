@@ -4,6 +4,9 @@
   "description": "kodtest CGI",
   "main": "server.js",
   "scripts": {
+    "client": "cd client && yarn start",
+    "server": "npx nodemon",
+    "dev": "concurrently --kill-other-on-fail \"yarn server\" \"yarn client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +25,7 @@
     "mongoose": "^5.10.7"
   },
   "devDependencies": {
-    "nodemon": "2.0.4"
+    "nodemon": "2.0.4",
+    "concurrently": "^4.0.1"
   }
 }

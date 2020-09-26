@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const visitkortController = require('../../controller/visitkortController')
 
 router.route('/')
     .get(function (req, res) {
@@ -9,25 +10,14 @@ router.route('/')
     })
 
 router.route('/visitkort')
-.get(function (req, res) {
-    Visitkort.find(function(err, docs) {
-        if (err) {
-            console.log(err)
-        } else {
-            res.json(docs)
-        }
-    })
-})
+    .get(visitkortController.index)
+    .post(visitkortController.add)
 
-router.post('/api/create', (req, res) => {
-    let visitkort = new Visitkort(req.body)
-    visitkort.save((err, data) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send(data)
-        }
-    })
-})
+router.route('/visitkort/:visitkort_id')
+    .get(visitkortController.view)
+    .patch(visitkortController.update)
+    .put(visitkortController.update)
+    .delete(visitkortController.delete)
 
-router.put('/api/:id')
+
+module.exports = router

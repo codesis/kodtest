@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const db = 'mongodb://localhost/kodtest'
 const dbOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 const mongo = mongoose.connect(db, dbOptions)
+const visitkortRoutes = require('./routes/api/routes')
 
 mongo.then(() => {
     console.log('Connected successfully!')
@@ -25,3 +26,4 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
+app.use('/api', visitkortRoutes)

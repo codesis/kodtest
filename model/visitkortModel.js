@@ -5,7 +5,7 @@ const visitkortSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    surName: {
+    surname: {
         type: String,
         required: true
     },
@@ -18,8 +18,8 @@ const visitkortSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: Binary,
-        required: true
+        type: Buffer,
+        required: false
     }
 })
 
