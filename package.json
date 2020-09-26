@@ -1,0 +1,27 @@
+{
+  "name": "kodtest",
+  "version": "1.0.0",
+  "description": "kodtest CGI",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codesis/kodtest.git"
+  },
+  "author": "Emma Källström (emma.kallstrom@protonmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codesis/kodtest/issues"
+  },
+  "homepage": "https://github.com/codesis/kodtest#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.7"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.4"
+  }
+}
