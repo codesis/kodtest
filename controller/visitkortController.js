@@ -7,12 +7,9 @@ exports.index = function (req, res) {
                 status: 'An error occurred',
                 message: err
             })
+        } else {
+            res.json(visitkort)
         }
-        res.json({
-            status: '200 OK',
-            message: 'All visitkort successfully fetched',
-            data: visitkort
-        })
     })
 }
 
@@ -29,45 +26,38 @@ exports.add = function (req, res) {
 }
 
 exports.view = function (req, res) {
-    Visitkort.findById(req.params.visitkort_id, function (err, visitkort) {
+    Visitkort.findById(req.params.id, function (err, visitkort) {
         if (err) {
             return res.send(err)
         }
-        res.json({
-            status: '200 OK',
-            message: 'Visitkort fetched Successfully',
-            data: visitkort
-        })
+        res.json(visitkort)
     })
 }
 
 exports.update = function (req, res) {
-    Visitkort.findById(req.params.visitkort_id, function (err, visitkort) {
+    Visitkort.findById(req.params.id, function (err, visitkort) {
         if (err) {
             return res.send(err)
         }
         
-        visitkort.visitkort_name = req.body.visitkort_name
-        visitkort.visitkort_surname = req.body.visitkort_surName
-        visitkort.visitkort_telephone = req.body.visitkort_telephone
-        visitkort.visitkort_email = req.body.visitkort_email
-        visitkort.visitkort_image = req.body.visitkort_image
+        visitkort.name = req.body.name
+        visitkort.surname = req.body.surname
+        visitkort.telephone = req.body.telephone
+        visitkort.email = req.body.email
+        visitkort.image = req.body.image
 
         visitkort.save(function (err) {
             if (err) {
                 return res.json(err)
             }
-            res.json({
-                message: 'Visitkort successfully Updated!',
-                data: visitkort
-            })
+            res.json(visitkort)
         })
     })
 }
 
 exports.delete = function (req, res) {
     Visitkort.deleteOne({
-        _id: req.params.visitkort_id
+        _id: req.params.id
     }, function (err) {
             if (err) {
                 return res.send(err)
