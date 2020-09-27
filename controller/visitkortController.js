@@ -1,12 +1,13 @@
 Visitkort = require('../model/visitkortModel')
 
 exports.index = function (req, res) {
-    Visitkort.get(function (err, visitkort) {
-        if (err)
-            res.json({
+    Visitkort.find(function (err, visitkort) {
+        if (err) {
+            return res.json({
                 status: 'An error occurred',
                 message: err
             })
+        }
         res.json({
             status: '200 OK',
             message: 'All visitkort successfully fetched',
@@ -16,28 +17,22 @@ exports.index = function (req, res) {
 }
 
 exports.add = function (req, res) {
-    let visitkort = new Visitkort()
-    visitkort.name = req.body.name ? req.body.name : visitkort.name
-    visitkort.surname = req.body.surname
-    visitkort.telephone = req.body.telephone
-    visitkort.email = req.body.email
-    visitkort.image = req.body.image
-
-    visitkort.save(function (err) {
-        if (err)
-            res.json(err)
-        
-        res.json({
-            message: 'New Visitkort added!',
-            data: visitkort
+    let visitkort = new Visitkort(req.body)
+    
+    visitkort.save()
+        .then(visitkort => {
+        res.status(200).json({'visitkort':'visitkort successfully created'})
         })
+        .catch(err => {
+        res.status(400).send('creating a new visitkort has failed')
     })
 }
 
 exports.view = function (req, res) {
     Visitkort.findById(req.params.visitkort_id, function (err, visitkort) {
-        if (err)
-            res.send(err)
+        if (err) {
+            return res.send(err)
+        }
         res.json({
             status: '200 OK',
             message: 'Visitkort fetched Successfully',
@@ -48,18 +43,20 @@ exports.view = function (req, res) {
 
 exports.update = function (req, res) {
     Visitkort.findById(req.params.visitkort_id, function (err, visitkort) {
-        if (err)
-            res.send(err)
+        if (err) {
+            return res.send(err)
+        }
         
-        visitkort.name = req.body.name ? req.body.name : visitkort.name
-        visitkort.surname = req.body.surname
-        visitkort.telephone = req.body.telephone
-        visitkort.email = req.body.email
-        visitkort.image = req.body.image
+        visitkort.visitkort_name = req.body.visitkort_name
+        visitkort.visitkort_surname = req.body.visitkort_surName
+        visitkort.visitkort_telephone = req.body.visitkort_telephone
+        visitkort.visitkort_email = req.body.visitkort_email
+        visitkort.visitkort_image = req.body.visitkort_image
 
         visitkort.save(function (err) {
-            if (err)
-                res.json(err)
+            if (err) {
+                return res.json(err)
+            }
             res.json({
                 message: 'Visitkort successfully Updated!',
                 data: visitkort
@@ -71,9 +68,10 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
     Visitkort.deleteOne({
         _id: req.params.visitkort_id
-    }, function (err, contact) {
-            if (err)
-                res.send(err)
+    }, function (err) {
+            if (err) {
+                return res.send(err)
+            }
             res.json({
                 status: '200 OK',
                 message: 'Visitkort successfully Deleted!'

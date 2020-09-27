@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 export default class CreateVisitkort extends Component {
 
@@ -6,11 +7,11 @@ export default class CreateVisitkort extends Component {
         super(props)
 
         this.state = {
-            visitkort_name: '',
-            visitkort_surname: '',
-            visitkort_telephone: '',
-            visitkort_email: '',
-            visitkort_image: ''
+            name: '',
+            surname: '',
+            telephone: '',
+            email: '',
+            image: ''
         }
 
         this.onChangeVisitkortName = this.onChangeVisitkortName.bind(this)
@@ -23,50 +24,61 @@ export default class CreateVisitkort extends Component {
 
     onChangeVisitkortName(e) {
         this.setState({
-            visitkort_name: e.target.value
+            name: e.target.value
         })
     }
 
     onChangeVisitkortSurname(e) {
         this.setState({
-            visitkort_surname: e.target.value
+            surname: e.target.value
         })
     }
 
     onChangeVisitkortTelephone(e) {
         this.setState({
-            visitkort_telephone: e.target.value
+            telephone: e.target.value
         })
     }
 
     onChangeVisitkortEmail(e) {
         this.setState({
-            visitkort_email: e.target.value
+            email: e.target.value
         })
     }
 
     onChangeVisitkortImage(e) {
         this.setState({
-            visitkort_image: e.target.value
+            image: e.target.value
         })
     }
 
     onSubmit(e) {
         e.preventDefault()
 
-        console.log('Form submitted: ')
-        console.log('Visitkort name: ${this.state.visitkort_name}')
-        console.log('Visitkort surname: ${this.state.visitkort_surname}')
-        console.log('Visitkort telephone: ${this.state.visitkort_telephone}')
-        console.log('Visitkort email: ${this.state.visitkort_email}')
-        console.log('Visitkort image: ${this.state.visitkort_image}')
+        console.log(`Form submitted: `)
+        console.log(`Visitkort name: ${this.state.name}`)
+        console.log(`Visitkort surname: ${this.state.surname}`)
+        console.log(`Visitkort telephone: ${this.state.telephone}`)
+        console.log(`Visitkort email: ${this.state.email}`)
+        console.log(`Visitkort image: ${this.state.image}`)
+
+        const newVisitkort = {
+            name: this.state.name,
+            surname: this.state.surname,
+            telephone: this.state.telephone,
+            email: this.state.email,
+            image: this.state.image
+        }
+
+        axios.post('http://localhost:8080/visitkort/create', newVisitkort)
+            .then(res => console.log(res.data))
 
         this.setState({
-            visitkort_name: '',
-            visitkort_surname: '',
-            visitkort_telephone: '',
-            visitkort_email: '',
-            visitkort_image: ''
+            name: '',
+            surname: '',
+            telephone: '',
+            email: '',
+            image: ''
         })
     }
     
@@ -79,16 +91,16 @@ export default class CreateVisitkort extends Component {
                         <label>Name: </label>
                         <input type="text"
                             className="form-control"
-                            value={this.state.visitkort_name}
+                            value={this.state.name}
                             onChange={this.onChangeVisitkortName}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Surname: </label>
+                        <label>surname: </label>
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.visitkort_surname}
+                            value={this.state.surname}
                             onChange={this.onChangeVisitkortSurname}
                         />
                     </div>
@@ -97,7 +109,7 @@ export default class CreateVisitkort extends Component {
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.visitkort_telephone}
+                            value={this.state.telephone}
                             onChange={this.onChangeVisitkortTelephone}
                         />
                     </div>
@@ -106,7 +118,7 @@ export default class CreateVisitkort extends Component {
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.visitkort_email}
+                            value={this.state.email}
                             onChange={this.onChangeVisitkortEmail}
                         />
                     </div>
@@ -115,7 +127,7 @@ export default class CreateVisitkort extends Component {
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.visitkort_image}
+                            value={this.state.image}
                             onChange={this.onChangeVisitkortImage}
                         />
                     </div>
